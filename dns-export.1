@@ -1,0 +1,48 @@
+.TH DNS-EXPORT 1
+.SH NAME
+dns-export \- processes data from DNS packets and sends statistics to syslog server
+.SH SYNOPSIS
+.B dns-export
+[\fB\-r\fR \fIfile.pcap\fR]
+[\fB\-i\fR \fIinterface\fR]
+[\fB\-s\fR \fIsyslog-server\fR]
+[\fB\-t\fR \fIseconds\fR]
+.SH DESCRIPTION
+dns-export \- processes data from DNS packets and sends statistics to \fIsyslog-server\fR. After SIGUSR1 signal or with no \fIsyslog-server\fR set statistics will pe printed to STDOUT. When [\fB\-r\fR \fIfile.pcap\fR] option is set, dns-export will parse given \fIfile.pcap\fR. When [\fB\-i\fR \fIinterface\fR] option is set, dns-export will listen on given \fIinterface\fR.
+\n
+Statistic are in format \fB"domain-name rr-type rr-answer count"\fR
+.SH OPTIONS
+.TP
+.BR \-r " " \fIfile.pcap\fR
+Obtain packets from \fIfile.pcap\fR.
+.TP
+.BR \-i " " \fIinterface\fR
+Listen on \fIinterface\fR and parse DNS packets.
+.TP
+.BR \-s " " \fIsyslog-server\fR
+Send statistics to \fIsyslog-server\fR given by hostname/IPv4/IPv6.
+.TP
+.BR \-t " " \fIseconds\fR
+Send ststistics evry \fIseconds\fR. Default value is 60.
+.SH EXAMPLES
+.TP
+.B dns-export \-r dns.pcap \-s 192.168.1.2
+Parse file \fBdns.pcap\fR and send statistic to syslog server on IPv4 \fB192.168.1.2\fR.
+.TP
+.B dns-export \-r dns.pcap
+Parse file \fBdns.pcap\fR and print statistic to STDOUT.
+.TP
+.B dns-export \-i wlp2s0 \-t 20
+Listen on interface \fBwlp2s0\fR.
+.TP
+.B dns-export \-i wlp2s0 \-s 192.168.1.2 \-t 40
+Listen on interface \fBwlp2s0\fR and send statistic to syslog server on IPv4 \fB192.168.1.2\fR every 40s.
+.TP
+.B dns-export \-i wlp2s0 \-r dns.pcap
+ERROR: Wrong arguments.
+.TP
+.B dns-export \-h
+Print program help to STDOUT.
+
+.SH AUTHOR
+Written by Petr Medek.
